@@ -10,6 +10,9 @@
 
 
 适合在NAS中挂微信,换手机也可以不丢失消息,配合绿联等nas自带的docker穿透可以实现在哪里,无论有没有手机都可以网页聊微信.
+ ![1](https://raw.githubusercontent.com/pewee-live/webtop-pinyin/refs/heads/main/pics/1.JPG)
+ 
+ ![2](https://raw.githubusercontent.com/pewee-live/webtop-pinyin/refs/heads/main/pics/2.JPG)
 
 ---
 
