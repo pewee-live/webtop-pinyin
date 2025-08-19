@@ -45,21 +45,21 @@ RUN mkdir -p /defaults/root/.config/fcitx5 && \
     echo "0=Default" >> /defaults/root/.config/fcitx5/profile
 
 
-# 复制你的 installWc.sh 到镜像
+# 复 installWc.sh 到镜像
 COPY installWc.sh /tmp/installWc.sh
 
-# 执行依赖安装脚本 + 下载官方 WeChat (根据架构选择)
+# 安装依赖 & 微信
 RUN chmod +x /tmp/installWc.sh && \
-    /tmp/installWc.sh && \
-    rm -f /tmp/installWc.sh && \
-    ARCH=$(dpkg --print-architecture) && \
-    if [ "$ARCH" = "amd64" ]; then \
-        URL="https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_x86_64.deb"; \
-    elif [ "$ARCH" = "arm64" ]; then \
-        URL="https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_arm64.deb"; \
-    else \
-        echo "❌ Unsupported architecture: $ARCH" && exit 1; \
-    fi && \
-    wget -O /tmp/wechat.deb $URL && \
+    bash /tmp/installWc.sh && \
+    rm -f /tmp/installWc.sh
+
+# 下载并安装 WeChat (官方 .deb)
+RUN ARCH=$(dpkg --print-architecture) && \
+    case "$ARCH" in \
+      amd64)  URL="https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_x86_64.deb" ;; \
+      arm64)  URL="https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_arm64.deb" ;; \
+      *)      echo "❌ Unsupported architecture: $ARCH" && exit 1 ;; \
+    esac && \
+    wget -O /tmp/wechat.deb "$URL" && \
     apt install -y /tmp/wechat.deb && \
     rm -f /tmp/wechat.deb
