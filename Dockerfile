@@ -54,11 +54,11 @@ RUN chmod +x /tmp/installWc.sh && \
     bash /tmp/installWc.sh && \
     rm -f /tmp/installWc.sh
 
-# 下载并安装 WeChat (官方 .deb)
+# 根据架构从 GitHub Release 下载 WeChat
 RUN ARCH=$(dpkg --print-architecture) && \
     case "$ARCH" in \
-      amd64)  URL="https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_x86_64.deb" ;; \
-      arm64)  URL="https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_arm64.deb" ;; \
+      amd64)  URL="https://github.com/pewee-live/webtop-pinyin/releases/download/20250819/WeChatLinux_x86_64.deb" ;; \
+      arm64)  URL="https://github.com/pewee-live/webtop-pinyin/releases/download/20250819/WeChatLinux_arm64.deb" ;; \
       *)      echo "❌ Unsupported architecture: $ARCH" && exit 1 ;; \
     esac && \
     wget -O /tmp/wechat.deb "$URL" && \
