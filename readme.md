@@ -1,6 +1,6 @@
 # 🖥️ Webtop + WeChat (支持中文输入)
 
-本项目基于 [LinuxServer.io Webtop](https://github.com/linuxserver/webtop) 镜像构建，集成了：
+本项目基于 [LinuxServer.io Webtop](https://github.com/linuxserver/docker-webtop) 镜像构建，集成了：
 
 - ✅ Webtop (通过浏览器访问完整 Linux 桌面环境)
 - ✅ 中文输入法 (Fcitx5 + 拼音)
