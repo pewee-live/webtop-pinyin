@@ -43,3 +43,23 @@ RUN mkdir -p /defaults/root/.config/fcitx5 && \
     echo "" >> /defaults/root/.config/fcitx5/profile && \
     echo "[GroupOrder]" >> /defaults/root/.config/fcitx5/profile && \
     echo "0=Default" >> /defaults/root/.config/fcitx5/profile
+
+
+# 复制你的 installWc.sh 到镜像
+COPY installWc.sh /tmp/installWc.sh
+
+# 执行依赖安装脚本 + 下载官方 WeChat (根据架构选择)
+RUN chmod +x /tmp/installWc.sh && \
+    /tmp/installWc.sh && \
+    rm -f /tmp/installWc.sh && \
+    ARCH=$(dpkg --print-architecture) && \
+    if [ "$ARCH" = "amd64" ]; then \
+        URL="https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_x86_64.deb"; \
+    elif [ "$ARCH" = "arm64" ]; then \
+        URL="https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_arm64.deb"; \
+    else \
+        echo "❌ Unsupported architecture: $ARCH" && exit 1; \
+    fi && \
+    wget -O /tmp/wechat.deb $URL && \
+    apt install -y /tmp/wechat.deb && \
+    rm -f /tmp/wechat.deb
